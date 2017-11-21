@@ -109,7 +109,3 @@ body#fullheight .right { height: 100%; }
 .new { font-weight: bold; cursor: pointer; color: black; }
 
 .task span { color: gray;}
-
-#dp .scheduler_default_corner div:last-child {
-	display: none;
-}

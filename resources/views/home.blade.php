@@ -55,9 +55,6 @@
                         <div class="bg-help">
                             <div class="inBox">
 
-                                <p id="claim"><a href="http://javascript.daypilot.org/">DayPilot for JavaScript</a> -
-                                    AJAX
-                                    Calendar/Scheduling Widgets for JavaScript/HTML5/jQuery</p>
                                 <hr class="hidden"/>
                             </div>
                         </div>
@@ -177,7 +174,7 @@
         dp.rowHeaderColumns = [
             {title: "Room", width: 80},
             {title: "Capacity", width: 80},
-            {title: "Status", width: 80}
+            {title: "Size", width: 80}
         ];
 
         dp.onBeforeResHeaderRender = function (args) {
@@ -186,7 +183,7 @@
             };
 
             args.resource.columns[0].html = beds(args.resource.capacity);
-            args.resource.columns[1].html = args.resource.status;
+            args.resource.columns[1].html = args.resource.size;
             switch (args.resource.status) {
                 case "Dirty":
                     args.resource.cssClass = "status_dirty";

@@ -18,15 +18,17 @@ $rooms = $db->query('SELECT * FROM rooms');
 $start = $_GET['start']; // TODO parse and format
 $end = $_GET['end']; // TODO parse and format
 ?>
-<form id="f" action="backend_create.php" style="padding:20px;">
+<form id="f" action="{{url('api/v1/reservations_new')}}" style="padding:20px;">
     <h1>New Reservation</h1>
     <label style="display: block" for="name">Name:</label>
     <div><input type="text" id="name" name="name" value=""/></div>
-    <div>Start:</div>
+    <label style="display: block" for="size">Size:</label>
+    <div><input type="text" id="size" name="size" value=""/></div>
+    <label style="display:block;" for="start">Start:</label>
     <div><input type="text" id="start" name="start" value="<?php echo $start ?>"/></div>
-    <div>End:</div>
+    <label style="display:block;" for="end">End:</label>
     <div><input type="text" id="end" name="end" value="<?php echo $end ?>"/></div>
-    <div>Room:</div>
+    <label style="display:block;" for="room">Room:</label>
     <div>
         <select id="room" name="room">
             <?php
