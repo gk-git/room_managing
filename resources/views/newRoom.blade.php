@@ -6,6 +6,14 @@
     <link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}"/>
     <script src="{{url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
     <script src="{{url('event/js/daypilot/daypilot-all.min.js')}}" type="text/javascript"></script>
+            <script type="text/javascript" src="">
+    window.alert = function() {};
+
+// or simply
+alert = function() {};
+window.prompt = alert;
+prompt = alert;
+</script>
 </head>
 <body>
 
@@ -47,5 +55,12 @@
     });
 
 </script>
+ <script type="text/javascript" src="">
+    
+        window.frames[0].alert =  window.frames[0].prompt =  window.frames[0].confirm = window.alert =window.confirm = window.prompt =alert =prompt = confirm =  function () {
+        debugger;
+        };
+    </script>
+
 </body>
 </html>

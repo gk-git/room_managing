@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Reservation;
+use DateTime;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreReservationsRequest;
@@ -106,12 +107,18 @@ class ReservationsController extends Controller
 
 
     }
-
+  public function moveReservations(Request $request)
+    {
+         $start_date = new DateTime($request->get('newStart'));
+        // $reservations = Reservation::whereDate('end', '>', $request->get('start'))->get()->all();
+       
+        return response()->json([$request->all(),$start_date]);
+    }
     public function moveReservation(Request $request)
     {
-        $reservations = Reservation::where('end', '>', $request->get('start'))
-            ->where('start', '<', $request->get('end'))
-            ->where('id', '!=', $request->get('id'))
+        $reservations = Reservation::where('end', '>', $request->get('newStart'))
+            ->where('start', '<', $request->get('newEnd'))
+            ->where('id', '<>', $request->get('id'))
             ->where('room_id', '=', $request->get('resource'))
             ->get()->all();
         $overlaps = count($reservations) > 0;

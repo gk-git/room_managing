@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('head')
+
     <link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}"/>
     <script src="{{url('event/js/daypilot/daypilot-all.min.js')}}" type="text/javascript"></script>
     <link type="text/css" rel="stylesheet" href="{{url('event/icons/style.css')}}"/>
@@ -104,13 +105,53 @@
             </div>
         </div>
     </div>
+    <h3 class="page-title">@lang('quickadmin.customers.title')</h3>
+    {!! Form::open(['method' => 'POST', 'route' => ['admin.customers.store']]) !!}
+
+<input type="hidden" name="homer_redirect" value='true'/>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            @lang('quickadmin.qa_create')
+        </div>
+        
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('name', trans('quickadmin.customers.fields.name').'*', ['class' => 'control-label']) !!}
+                    {!! Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => 'Customer name', 'required' => '']) !!}
+                    <p class="help-block">Customer name</p>
+                    @if($errors->has('name'))
+                        <p class="help-block">
+                            {{ $errors->first('name') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 form-group">
+                    {!! Form::label('phone', trans('quickadmin.customers.fields.phone').'*', ['class' => 'control-label']) !!}
+                    {!! Form::text('phone', old('phone'), ['class' => 'form-control', 'placeholder' => 'Customer Phone number', 'required' => '']) !!}
+                    <p class="help-block">Customer Phone number</p>
+                    @if($errors->has('phone'))
+                        <p class="help-block">
+                            {{ $errors->first('phone') }}
+                        </p>
+                    @endif
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    {!! Form::submit(trans('quickadmin.qa_save'), ['class' => 'btn btn-danger']) !!}
+    {!! Form::close() !!}
 
 @endsection
 @section('end_body')
 
     <script type="text/javascript">
         var nav = new DayPilot.Navigator("nav");
-        nav.selectMode = "month";
+        nav.selectMode = "week";
         nav.showMonths = 3;
         nav.skipMonths = 3;
         nav.onTimeRangeSelected = function (args) {
@@ -158,9 +199,9 @@
 
         dp.scale = "Day";
         //dp.startDate = new DayPilot.Date().firstDayOfMonth();
-        dp.days = dp.startDate.daysInMonth();
+        dp.days = 7;
         loadTimeline(DayPilot.Date.today());
-
+        dp.cellWidthSpec = "Auto";
         dp.eventDeleteHandling = "Update";
 
         dp.timeHeaders = [
@@ -213,13 +254,15 @@
 
         // http://api.daypilot.org/daypilot-scheduler-oneventmoved/
         dp.onEventMoved = function (args) {
-            $.post("{{url('api/v1/reservations_move')}}",
-                {
+            var data =  {
                     id: args.e.id(),
-                    newStart: args.newStart.toString(),
-                    newEnd: args.newEnd.toString(),
+                    newStart: args.newStart.toString('yyyy-MM-dd HH:mm:ss'),
+                    newEnd: args.newEnd.toString('yyyy-MM-dd HH:mm:ss'),
                     newResource: args.newResource
-                },
+                };
+                console.log('22 =>', data);
+            $.post("{{url('api/v1/reservations_move')}}",
+               data,
                 function (data) {
                     dp.message(data.message);
                 });
@@ -227,12 +270,14 @@
 
         // http://api.daypilot.org/daypilot-scheduler-oneventresized/
         dp.onEventResized = function (args) {
-            $.post("{{url('api/v1/reservations_resize')}}",
-                {
+           var data = {
                     id: args.e.id(),
-                    newStart: args.newStart.toString(),
-                    newEnd: args.newEnd.toString()
-                },
+                    newStart: args.newStart.toString('yyyy-MM-dd HH:mm:ss'),
+                    newEnd: args.newEnd.toString('yyyy-MM-dd HH:mm:ss')
+                };
+                console.log('log 248', data);
+            $.post("{{url('api/v1/reservations_resize')}}",
+                data,
                 function () {
                     dp.message("Resized.");
                 });
@@ -264,7 +309,8 @@
                     loadEvents();
                 }
             };
-            modal.showUrl("new.php?start=" + args.start + "&end=" + args.end + "&resource=" + args.resource);
+            // modal.showUrl("new.php?start=" + args.start + "&end=" + args.end + "&resource=" + args.resource);
+            modal.showUrl('/admin/event_add/' + args.start.toString('yyyy-MM-dd HH:mm:ss') + '/' + args.end.toString('yyyy-MM-dd HH:mm:ss') + '/' + args.resource);
 
         };
 
@@ -277,7 +323,9 @@
                     loadEvents();
                 }
             };
-            modal.showUrl("edit.php?id=" + args.e.id());
+           
+            // modal.showUrl("edit.php?id=" + args.e.id());
+             modal.showUrl("/admin/event_edit/" + args.e.id());
         };
 
         dp.onBeforeCellRender = function (args) {
@@ -296,57 +344,19 @@
 
             args.e.html = args.e.text + " (" + start.toString("M/d/yyyy") + " - " + end.toString("M/d/yyyy") + ")";
 
-            switch (args.e.status) {
-                case "New":
-                    var in2days = today.addDays(1);
-
-                    if (start < in2days) {
-                        args.e.barColor = 'red';
-                        args.e.toolTip = 'Expired (not confirmed in time)';
-                    }
-                    else {
-                        args.e.barColor = 'orange';
-                        args.e.toolTip = 'New';
-                    }
-                    break;
-                case "Confirmed":
-                    var arrivalDeadline = today.addHours(18);
-
-                    if (start < today || (start.getDatePart() === today.getDatePart() && now > arrivalDeadline)) { // must arrive before 6 pm
-                        args.e.barColor = "#f41616";  // red
-                        args.e.toolTip = 'Late arrival';
-                    }
-                    else {
-                        args.e.barColor = "green";
-                        args.e.toolTip = "Confirmed";
-                    }
-                    break;
-                case 'Arrived': // arrived
-                    var checkoutDeadline = today.addHours(10);
-
-                    if (end < today || (end.getDatePart() === today.getDatePart() && now > checkoutDeadline)) { // must checkout before 10 am
-                        args.e.barColor = "#f41616";  // red
-                        args.e.toolTip = "Late checkout";
-                    }
-                    else {
-                        args.e.barColor = "#1691f4";  // blue
-                        args.e.toolTip = "Arrived";
-                    }
-                    break;
-                case 'CheckedOut': // checked out
-                    args.e.barColor = "gray";
-                    args.e.toolTip = "Checked out";
-                    break;
-                default:
-                    args.e.toolTip = "Unexpected state";
-                    break;
-            }
+         
 
             args.e.html = args.e.html + "<br /><span style='color:gray'>" + args.e.toolTip + "</span>";
 
             var paid = args.e.paid;
-            var paidColor = "#aaaaaa";
-
+            var paidColor = "#e8e843";
+      args.e.barColor = 'orange';   
+if(paid){
+    paid= 100;
+    paidColor = "#ff000";
+     args.e.barColor = 'red';
+}
+ console.log('paid =>', paid,args,paidColor);
             args.e.areas = [
                 {
                     bottom: 10,
@@ -398,11 +408,13 @@
             var end = dp.visibleEnd();
 
 //            $.post("backend _events.php",
+            var data = {
+                start: start.toString('yyyy-MM-dd HH:mm:ss'),
+                end: end.toString('yyyy-MM-dd HH:mm:ss')
+            }
+            console.log(data);
             $.post("{{url('api/v1/reservations_get')}}",
-                {
-                    start: start.toString(),
-                    end: end.toString()
-                },
+                data,
                 function (data) {
                     dp.events.list = data;
                     dp.update();
@@ -427,6 +439,12 @@
             });
         });
 
+    </script>
+        <script type="text/javascript" src="">
+    
+        window.frames[0].alert =  window.frames[0].prompt =  window.frames[0].confirm = window.alert =window.confirm = window.prompt =alert =prompt = confirm =  function () {
+       debugger;
+        };
     </script>
 
 @endsection

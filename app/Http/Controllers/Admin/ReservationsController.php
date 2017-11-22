@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Reservation;
+use App\Room;
+use App\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\Controller;
@@ -247,5 +249,18 @@ class ReservationsController extends Controller
         $reservation->forceDelete();
 
         return redirect()->route('admin.reservations.index');
+    }
+   
+    public function reservations_add($start, $end, $resource)
+    {
+        $rooms = Room::get()->all();
+        $customers = Customer::get()->all();
+        return view('new_event', compact('rooms','start','end','resource','customers'));
+    }
+    public function reservations_edit($id) {
+        $event = Reservation::findOrFail($id);
+         $rooms = Room::get()->all();
+        $customers = Customer::get()->all();
+        return view('edit_event', compact('id','event','rooms','customers'));
     }
 }

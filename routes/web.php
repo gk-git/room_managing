@@ -1,7 +1,5 @@
 <?php
-Route::get('/', function () {
-    return redirect('/admin/home');
-});
+Route::get('/','PublicControleer@index');
 
 // Authentication Routes...
 $this->get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
@@ -24,6 +22,7 @@ Route::get('{driver}/callback', 'Auth\LoginController@handleSocialCallback')->na
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 
     Route::resource('roles', 'Admin\RolesController');
     Route::post('roles_mass_destroy', ['uses' => 'Admin\RolesController@massDestroy', 'as' => 'roles.mass_destroy']);
@@ -55,4 +54,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('search', 'MegaSearchController@search')->name('mega-search');
     Route::any('room_add', 'Admin\RoomsController@room_add');
     Route::any('room_edit/{id?}', 'Admin\RoomsController@room_edit');
+    Route::get('event_add/{start}/{end}/{resource}','Admin\ReservationsController@reservations_add' );
+    Route::get('event_edit/{id}', 'Admin\ReservationsController@reservations_edit');
 });

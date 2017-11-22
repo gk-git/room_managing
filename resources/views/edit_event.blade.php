@@ -2,24 +2,20 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>New Reservation</title>
-    	<link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}" />   
-    	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+        <title>Edit Event</title>
+    	<link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}" />    
         <script src="{{url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
-        <script type="text/javascript" src="">
-    window.alert = function() {};
-
-// or simply
-alert = function() {};
-window.prompt = alert;
-prompt = alert;
-</script>
     </head>
     <body>
-        <form id="f" action="{{url('api/v1/reservations_new')}}" style="padding:20px;">
-            <h1>New Reservation</h1>
+    
+        <form id="f" action="{{url('api/v1/reservations_update')}}" style="padding:20px;">
+            {{csrf_field()}}
+            <input type="hidden" name="id" value="{{$id}}" />
+            <h1>Edit Reservation</h1>
+            
+             <h1>New Reservation</h1>
             <div>Name: </div>
-            <div><input type="text" id="name" name="name" value="" /></div>
+            <div><input type="text" id="name" name="name" value="{{$event->name}}" /></div>
             <label for="customer_id" style="display: block">
                 Customer
             </label>
@@ -36,15 +32,15 @@ prompt = alert;
             </select>
 
             <div>Start:</div>
-            <div><input type="text" id="start" name="start" value="{{$start}}" /></div>
+            <div><input type="text" id="start" name="start" value="{{$event->start}}" /></div>
             <div>End:</div>
-            <div><input type="text" id="end" name="end" value="{{$end}}" /></div>
+            <div><input type="text" id="end" name="end" value="{{$event->end}}" /></div>
             <div>Room:</div>
             <div>
                 <select id="room" name="room_id">
                     <?php 
                         foreach ($rooms as $room) {
-                            $selected = $resource == $room->id ? ' selected="selected"' : '';
+                            $selected = $event->room_id == $room->id ? ' selected="selected"' : '';
                             $id = $room->id;
                             $name = $room->name;
                             print "<option value='$id' $selected>$name</option>";
@@ -53,6 +49,26 @@ prompt = alert;
                 </select>
                 
             </div>
+            <div>Paid:</div>
+            <div>
+                <select id="paid" name="paid">
+                    <?php 
+                    if($event->paid ){
+                        ?>
+                         <option value='1' selected > Paid</option>
+                   <option value='0' >Not Paid</option>
+                        <?php
+                    }else {
+                        ?>
+                        <option value='1'   > Paid</option>
+                   <option value='0' selected >Not Paid</option>
+                        <?php
+                    }
+                    ?>
+                </select>
+                
+            </div>
+            
             <div class="space"><input type="submit" value="Save" /> <a href="javascript:close();">Cancel</a></div>
         </form>
         
@@ -65,11 +81,6 @@ prompt = alert;
 
         $("#f").submit(function () {
             var f = $("#f");
-            console.log()
-            if(document.getElementById('name').value == ''){
-                document.getElementById('name').value = 'No Customer Name'
-            }
-            console.log(f.serialize());
             $.post(f.attr("action"), f.serialize(), function (result) {
                 close(eval(result));
             });
@@ -81,16 +92,10 @@ prompt = alert;
         });
     
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-        <script type="text/javascript" >
-            $(document).ready(function() {
-    $('.js-example-basic-single').select2();
-});
-        </script>
          <script type="text/javascript" src="">
     
         window.frames[0].alert =  window.frames[0].prompt =  window.frames[0].confirm = window.alert =window.confirm = window.prompt =alert =prompt = confirm =  function () {
-        debugger;
+      debugger;
         };
     </script>
 

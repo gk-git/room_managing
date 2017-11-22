@@ -43,7 +43,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Reservation extends Model
 {
     use SoftDeletes;
-
+ protected $dateFormat = 'Y-m-d H:i:s';
+    
     protected $fillable = ['name', 'start', 'end', 'paid', 'status', 'customer_id', 'room_id'];
     public static $searchable = [
     ];

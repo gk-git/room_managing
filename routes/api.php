@@ -10,7 +10,7 @@ Route::group(['prefix' => '/v1', 'namespace' => 'Api\V1', 'as' => 'api.'], funct
 
 
     Route::post('reservations_new', 'ReservationsController@newReservation');
-    Route::post('reservations_delete', 'ReservationsController@delteteReservation');
+    Route::post('reservations_delete', 'ReservationsController@deleteReservation');
     Route::post('reservations_update', 'ReservationsController@updateReservations');
     Route::post('reservations_get', 'ReservationsController@getReservations');
     Route::post('reservations_move', 'ReservationsController@moveReservation');

@@ -93,6 +93,7 @@ class RoomsController extends Controller
                 $r->name = $room['name'];
                 $r->capacity = $room['capacity'];
                 $r->status = $room['status'];
+                $r->size = $room['size'];
                 $results[] = $r;
             }
             return response()->json($results);
@@ -106,6 +107,7 @@ class RoomsController extends Controller
                 $r->name = $room['name'];
                 $r->capacity = $room['capacity'];
                 $r->status = $room['status'];
+                $r->size = $room['size'];
                 $results[] = $r;
             }
             return response()->json($results);

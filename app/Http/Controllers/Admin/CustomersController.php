@@ -93,8 +93,10 @@ class CustomersController extends Controller
         }
         $customer = Customer::create($request->all());
 
-
-
+        
+        if($request->get('homer_redirect') == 'true'){
+            return redirect()->back();
+        }
         return redirect()->route('admin.customers.index');
     }
 
