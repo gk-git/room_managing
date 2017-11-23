@@ -40,6 +40,8 @@ class Customer extends Model
         parent::boot();
 
         Customer::observe(new \App\Observers\UserActionsObserver);
+
+        Customer::observe(new \App\Observers\CustomerCrudActionObserver);
     }
     
 }

@@ -213,14 +213,14 @@
         dp.bubble = new DayPilot.Bubble({});
 
         dp.rowHeaderColumns = [
-            {title: "Room", width: 80},
-            {title: "Capacity", width: 80},
-            {title: "Size", width: 80}
+            {title: "خيمه", width: 80},
+            {title: "السعة", width: 80},
+            {title: "الحجم", width: 80}
         ];
 
         dp.onBeforeResHeaderRender = function (args) {
             var beds = function (count) {
-                return count + " bed" + (count > 1 ? "s" : "");
+                return count + " " + (count > 1 ? "s" : "");
             };
 
             args.resource.columns[0].html = beds(args.resource.capacity);
@@ -260,7 +260,7 @@
                     newEnd: args.newEnd.toString('yyyy-MM-dd HH:mm:ss'),
                     newResource: args.newResource
                 };
-                console.log('22 =>', data);
+              
             $.post("{{url('api/v1/reservations_move')}}",
                data,
                 function (data) {
@@ -275,7 +275,7 @@
                     newStart: args.newStart.toString('yyyy-MM-dd HH:mm:ss'),
                     newEnd: args.newEnd.toString('yyyy-MM-dd HH:mm:ss')
                 };
-                console.log('log 248', data);
+            
             $.post("{{url('api/v1/reservations_resize')}}",
                 data,
                 function () {
@@ -309,7 +309,7 @@
                     loadEvents();
                 }
             };
-            // modal.showUrl("new.php?start=" + args.start + "&end=" + args.end + "&resource=" + args.resource);
+    
             modal.showUrl('/admin/event_add/' + args.start.toString('yyyy-MM-dd HH:mm:ss') + '/' + args.end.toString('yyyy-MM-dd HH:mm:ss') + '/' + args.resource);
 
         };
@@ -323,8 +323,6 @@
                     loadEvents();
                 }
             };
-           
-            // modal.showUrl("edit.php?id=" + args.e.id());
              modal.showUrl("/admin/event_edit/" + args.e.id());
         };
 
@@ -356,7 +354,6 @@ if(paid){
     paidColor = "#ff000";
      args.e.barColor = 'red';
 }
- console.log('paid =>', paid,args,paidColor);
             args.e.areas = [
                 {
                     bottom: 10,
@@ -384,6 +381,11 @@ if(paid){
 
         dp.init();
 
+        setInterval(()=>{
+            console.log('End');
+            loadResources();
+                loadEvents();
+        }, 5000 )
         loadResources();
         loadEvents();
 
@@ -406,13 +408,11 @@ if(paid){
         function loadEvents() {
             var start = dp.visibleStart();
             var end = dp.visibleEnd();
-
-//            $.post("backend _events.php",
             var data = {
                 start: start.toString('yyyy-MM-dd HH:mm:ss'),
                 end: end.toString('yyyy-MM-dd HH:mm:ss')
             }
-            console.log(data);
+           
             $.post("{{url('api/v1/reservations_get')}}",
                 data,
                 function (data) {
@@ -423,8 +423,6 @@ if(paid){
         }
 
         function loadResources() {
-
-//            $.post("backend _rooms.php",
             $.post("{{url('api/v1/rooms_get')}}",
                 {capacity: $("#filter").val()},
                 function (data) {

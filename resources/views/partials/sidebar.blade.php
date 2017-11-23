@@ -106,7 +106,7 @@
                 <a href="{{ route('admin.messenger.index') }}">
                     <i class="fa fa-envelope"></i>
 
-                    <span>Messages</span>
+                    <span>رسائل</span>
                     @if($unread > 0)
                         {{ ($unread > 0 ? '('.$unread.')' : '') }}
                     @endif

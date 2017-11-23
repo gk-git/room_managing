@@ -8,16 +8,16 @@
 
         {{--Sidebar--}}
         <div class="col-xs-3">
-            <a href="{{ route('admin.messenger.create') }}" class="btn btn-primary btn-group-justified">New message</a>
+            <a href="{{ route('admin.messenger.create') }}" class="btn btn-primary btn-group-justified">رسالة جديدة</a>
 
             <div class="list-group" style="margin-top:8px;">
-                <a href="{{ route('admin.messenger.index') }}" class="list-group-item">All Messages</a>
+                <a href="{{ route('admin.messenger.index') }}" class="list-group-item">جميع الرسائل</a>
                 @php($unread = App\MessengerTopic::unreadInboxCount())
                 <a href="{{ route('admin.messenger.inbox') }}" class="list-group-item {{ ($unread > 0 ? 'unread' : '') }}">
-                    Inbox
+                    صندوق الوارد
                     {{ ($unread > 0 ? '('.$unread.')' : '') }}
                 </a>
-                <a href="{{ route('admin.messenger.outbox') }}" class="list-group-item">Outbox</a>
+                <a href="{{ route('admin.messenger.outbox') }}" class="list-group-item">صندوق الحفظ</a>
             </div>
         </div>
 

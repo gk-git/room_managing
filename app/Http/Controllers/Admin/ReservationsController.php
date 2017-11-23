@@ -247,8 +247,8 @@ class ReservationsController extends Controller
         }
         $reservation = Reservation::onlyTrashed()->findOrFail($id);
         $reservation->forceDelete();
-
-        return redirect()->route('admin.reservations.index');
+return redirect()->back();
+        // return redirect()->route('admin.reservations.index');
     }
    
     public function reservations_add($start, $end, $resource)

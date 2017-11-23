@@ -82,6 +82,7 @@ if ($id > 0) {
     });
 
 </script>
+ 
  <script type="text/javascript" src="">
     
         window.frames[0].alert =  window.frames[0].prompt =  window.frames[0].confirm = window.alert =window.confirm = window.prompt =alert =prompt = confirm =  function () {

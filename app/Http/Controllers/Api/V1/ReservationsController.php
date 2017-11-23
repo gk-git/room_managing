@@ -74,7 +74,9 @@ class ReservationsController extends Controller
 
     public function deleteReservation(Request $request)
     {
+       
         $reservation = Reservation::findOrFail($request->get('id'));
+        
         $reservation->delete();
         $response = [
             'result' => 'ok',
@@ -164,6 +166,16 @@ class ReservationsController extends Controller
     public function updateReservations(Request $request)
     {
         $reservation = Reservation::findOrFail($request->get('id'));
+        
+        $start_date = new DateTime($request->get('start'));
+        $end_date = new DateTime($request->get('end'));
+        if($start_date > $end_date){
+            return response()->json([
+                'success'=> 'false',
+                'message'=> 'start date less then end date'
+                ]);
+        }
+        
         $reservation->update($request->all());
 
         $response = new Custom_Result();

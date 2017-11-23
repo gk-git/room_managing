@@ -53,7 +53,10 @@ class Reservation extends Model
     {
         parent::boot();
 
+      
         Reservation::observe(new \App\Observers\UserActionsObserver);
+
+        Reservation::observe(new \App\Observers\ReservationCrudActionObserver);
     }
 
     /**

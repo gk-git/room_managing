@@ -5,7 +5,7 @@
 @section('messenger-content')
 
     <div class="row">
-        <a href="{{ route('admin.messenger.edit', [$topic->id]) }}" class="btn btn-primary">Reply</a>
+        <a href="{{ route('admin.messenger.edit', [$topic->id]) }}" class="btn btn-primary">الرد</a>
 
         <div class="col-md-12">
             <div class="list-group" style="margin-top:8px;">

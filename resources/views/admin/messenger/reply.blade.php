@@ -1,6 +1,6 @@
 @extends('admin.messenger.template')
 
-@section('title', 'New message')
+@section('title', 'رسالة جديدة')
 
 @section('messenger-content')
 

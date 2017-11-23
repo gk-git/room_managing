@@ -31,7 +31,7 @@
                     </div>
                 @empty
                     <div class="row list-group-item">
-                        You have no messages.
+                        ليس لديك رسائل.
                     </div>
                 @endforelse
             </div>

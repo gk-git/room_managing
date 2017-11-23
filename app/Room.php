@@ -40,7 +40,9 @@ class Room extends Model
     {
         parent::boot();
 
-        Room::observe(new \App\Observers\UserActionsObserver);
+          Room::observe(new \App\Observers\UserActionsObserver);
+
+        Room::observe(new \App\Observers\RoomCrudActionObserver);
     }
 
 }
