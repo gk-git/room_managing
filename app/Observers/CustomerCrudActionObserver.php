@@ -20,11 +20,11 @@ class CustomerCrudActionObserver
             $emails[] = $user->email;
         }
         $data = [
-            "action" => "Deleted",
-            "crud_name" => "Customers"
+            "action" => "تم الحذف",
+            "crud_name" => "الزبائن"
         ];
         $users = \App\User::where("email", $emails)->get();
-        // Notification::send($users, new QA_EmailNotification($data));
+        Notification::send($users, new QA_EmailNotification($data));
     }
 
 }

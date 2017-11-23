@@ -30,11 +30,11 @@ class QA_EmailNotification extends Notification
         return (new MailMessage)
             ->subject(config('app.name') . ': entry ' . $this->data["action"] . ' in ' . $this->data['crud_name'])
             ->greeting('Hi,')
-            ->line('we would like to inform you that entry has been ' . $this->data["action"] . ' in ' . $this->data['crud_name'])
-            ->line('Please log in to see more information.')
+            ->line('نود أن نعلمكم أن الدخول كان ' . $this->data["action"] . ' في ' . $this->data['crud_name'])
+            ->line('الرجاء تسجيل الدخول للاطلاع على مزيد من المعلومات.')
             ->action(config('app.name'), url(env('APP_URL')))
-            ->line('Thank you')
-            ->line(config('app.name') . ' Team')
+            ->line('شكرا لكم')
+            ->line(config('app.name') . ' الفريق')
             ->salutation(" ");
     }
 

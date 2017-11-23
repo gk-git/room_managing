@@ -1,9 +1,13 @@
 @extends('layouts.app')
+@section('title')
+<title>Kashta Camp</title>
+@endsection
 @section('head')
 
     <link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}"/>
     <script src="{{url('event/js/daypilot/daypilot-all.min.js')}}" type="text/javascript"></script>
-    <link type="text/css" rel="stylesheet" href="{{url('event/icons/style.css')}}"/>
+    <script src="{{url('event/js/alert.js')}}" type="text/javascript"></script>
+
     <style type="text/css">
         .icon {
             font-size: 14px;
@@ -63,49 +67,8 @@
                     <div class="shadow"></div>
                     <div class="hideSkipLink">
                     </div>
-                    <div class="main">
-
-                        <div style="width:160px; float:left;">
-                            <div id="nav"></div>
-                        </div>
-
-                        <div style="margin-left: 160px;">
-
-                            <div class="space">
-                                Show rooms:
-                                <select id="filter">
-                                    <option value="0">All</option>
-                                    <option value="1">Single</option>
-                                    <option value="2">Double</option>
-                                    <option value="4">Family</option>
-                                </select>
-
-                                <div class="space">
-                                    Time range:
-                                    <select id="timerange">
-                                        <option value="week">Week</option>
-                                        <option value="month" selected>Month</option>
-                                    </select>
-                                    <label for="autocellwidth"><input type="checkbox" id="autocellwidth">Auto Cell Width</label>
-                                </div>
-                            </div>
-                            <div id="dp"></div>
-                            <div class="space">
-                                <a href="#" id="add-room">Add Room</a>
-                            </div>
-
-                        </div>
-
-
-                    </div>
-                    <div class="clear">
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <h3 class="page-title">@lang('quickadmin.customers.title')</h3>
+                    <div class="div">
+                            <h3 class="page-title">@lang('quickadmin.customers.title')</h3>
     {!! Form::open(['method' => 'POST', 'route' => ['admin.customers.store']]) !!}
 
 <input type="hidden" name="homer_redirect" value='true'/>
@@ -145,6 +108,45 @@
 
     {!! Form::submit(trans('quickadmin.qa_save'), ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
+
+                    </div>
+                    <div class="main">
+
+                        <div style="width:160px; float:left;">
+                            <div id="nav"></div>
+                        </div>
+
+                        <div style="margin-left: 160px;">
+
+                            <div class="space">
+                                Show rooms:
+                                <input type="text" name="rooms" id='filter' placeholder='أدخل رقم الخيمه لإجراء التصفية'/>
+
+                                <div class="space">
+                                    Time range:
+                                    <select id="timerange">
+                                        <option value="week">Week</option>
+                                        <option value="month" selected>Month</option>
+                                    </select>
+                                    <label for="autocellwidth"><input type="checkbox" id="autocellwidth">Auto Cell Width</label>
+                                </div>
+                            </div>
+                            <div id="dp"></div>
+                            <div class="space">
+                                <a href="#" id="add-room">Add Room</a>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="clear">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 @section('end_body')
@@ -385,7 +387,7 @@ if(paid){
             console.log('End');
             loadResources();
                 loadEvents();
-        }, 5000 )
+        }, 10000 )
         loadResources();
         loadEvents();
 
@@ -424,7 +426,7 @@ if(paid){
 
         function loadResources() {
             $.post("{{url('api/v1/rooms_get')}}",
-                {capacity: $("#filter").val()},
+                {room_number: $("#filter").val()},
                 function (data) {
                     dp.resources = data;
                     dp.update();
@@ -438,11 +440,6 @@ if(paid){
         });
 
     </script>
-        <script type="text/javascript" src="">
-    
-        window.frames[0].alert =  window.frames[0].prompt =  window.frames[0].confirm = window.alert =window.confirm = window.prompt =alert =prompt = confirm =  function () {
-       debugger;
-        };
-    </script>
+       
 
 @endsection

@@ -304,7 +304,7 @@ return [
 	'qa_not_approved_title' => 'أنت غير موافق عليه',
 	'qa_not_approved_p' => 'لم تتم الموافقة على حسابك من قبل المشرف. يرجى التحلي بالصبر وإعادة المحاولة لاحقا.',
 	'qa_there_were_problems_with_input' => 'كانت هناك مشاكل مع المدخلات',
-	'qa_whoops' => 'عفوا!',
+	'qa_whoops' => '!عفوا',
 	'qa_file_contains_header_row' => 'يحتوي الملف على صف رأس الصفحة؟',
 	'qa_csvImport' => 'CSV استيراد',
 	'qa_csv_file_to_import' => 'CSV ملف للاستيراد',

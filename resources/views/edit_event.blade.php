@@ -3,9 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>Edit Event</title>
+        
          @include('partials.head')
     	<link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}" />    
         <script src="{{url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
+         <script src="{{url('event/js/alert.js')}}" type="text/javascript"></script>
+
     </head>
     <body>
     
@@ -53,13 +56,13 @@
                     <?php 
                     if($event->paid ){
                         ?>
-                         <option value='1' selected > Paid</option>
-                   <option value='0' >Not Paid</option>
+                         <option value='1' selected > مدفوع</option>
+                   <option value='0' >غير مدفوع</option>
                         <?php
                     }else {
                         ?>
-                        <option value='1'   > Paid</option>
-                   <option value='0' selected >Not Paid</option>
+                        <option value='1'   > مدفوع</option>
+                   <option value='0' selected >غير مدفوع</option>
                         <?php
                     }
                     ?>
@@ -67,7 +70,7 @@
                 
             </div>
             
-            <div class="space"><input type="submit" value="Save" /> <a href="javascript:close();">Cancel</a></div>
+            <div class="space"><input type="submit" id='submit' value="Save" /> <a href="javascript:close();">Cancel</a></div>
         </form>
            @include('partials.javascripts')
         <script type="text/javascript">
@@ -76,13 +79,23 @@
                 parent.DayPilot.ModalStatic.close(result);
             }
         }
+        var condition = true;
 
         $("#f").submit(function () {
             var f = $("#f");
-            $.post(f.attr("action"), f.serialize(), function (result) {
+             
+            if(condition ){
+               condition = false;
+                 $.post(f.attr("action"), f.serialize(), function (result) {
                 close(eval(result));
+                condition = true;
             });
             return false;
+            }
+            else {
+                window._backUpalert('please wait');
+            }
+           
         });
 
         $(document).ready(function () {
@@ -103,12 +116,5 @@
              language: 'en'
         });
     </script>
-         <script type="text/javascript" src="">
-    
-        window.frames[0].alert =  window.frames[0].prompt =  window.frames[0].confirm = window.alert =window.confirm = window.prompt =alert =prompt = confirm =  function () {
-      debugger;
-        };
-    </script>
-
     </body>
 </html>

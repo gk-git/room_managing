@@ -18,12 +18,12 @@ class ReservationCrudActionObserver
             $emails[] = $user->email;
         }
         $data = [
-            "action" => "Created",
-            "crud_name" => "Reservations"
+            "action" => "خلقت",
+            "crud_name" => "الحجوزات"
         ];
 
         $users = \App\User::where("email", $emails)->get();
-        // Notification::send($users, new QA_EmailNotification($data));
+        Notification::send($users, new QA_EmailNotification($data));
 
     }
 
@@ -35,11 +35,11 @@ class ReservationCrudActionObserver
             $emails[] = $user->email;
         }
         $data = [
-            "action" => "Updated",
-            "crud_name" => "Reservations"
+            "action" => "تم التحديث",
+            "crud_name" => "الحجوزات"
         ];
         $users = \App\User::where("email", $emails)->get();
-        // Notification::send($users, new QA_EmailNotification($data));
+        Notification::send($users, new QA_EmailNotification($data));
     }
 
     public function deleting(Reservation $model)
@@ -50,11 +50,11 @@ class ReservationCrudActionObserver
             $emails[] = $user->email;
         }
         $data = [
-            "action" => "Deleted",
-            "crud_name" => "Reservations"
+            "action" => "تم الحذف",
+            "crud_name" => "الحجوزات"
         ];
         $users = \App\User::where("email", $emails)->get();
-        // Notification::send($users, new QA_EmailNotification($data));
+        Notification::send($users, new QA_EmailNotification($data));
     }
 
 }

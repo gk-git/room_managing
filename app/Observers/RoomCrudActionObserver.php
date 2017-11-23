@@ -18,12 +18,12 @@ class RoomCrudActionObserver
             $emails[] = $user->email;
         }
         $data = [
-            "action" => "Created",
-            "crud_name" => "Rooms"
+            "action" => "خلقت",
+            "crud_name" => "خيام"
         ];
 
         $users = \App\User::where("email", $emails)->get();
-        // Notification::send($users, new QA_EmailNotification($data));
+        Notification::send($users, new QA_EmailNotification($data));
 
     }
 
@@ -35,11 +35,11 @@ class RoomCrudActionObserver
             $emails[] = $user->email;
         }
         $data = [
-            "action" => "Updated",
-            "crud_name" => "Rooms"
+            "action" => "تم التحديث",
+            "crud_name" => "خيام"
         ];
         $users = \App\User::where("email", $emails)->get();
-        // Notification::send($users, new QA_EmailNotification($data));
+        Notification::send($users, new QA_EmailNotification($data));
     }
 
     public function deleting(Room $model)
@@ -50,11 +50,11 @@ class RoomCrudActionObserver
             $emails[] = $user->email;
         }
         $data = [
-            "action" => "Deleted",
-            "crud_name" => "Rooms"
+            "action" => "تم الحذف",
+            "crud_name" => "خيام"
         ];
         $users = \App\User::where("email", $emails)->get();
-        // Notification::send($users, new QA_EmailNotification($data));
+        Notification::send($users, new QA_EmailNotification($data));
     }
 
 }

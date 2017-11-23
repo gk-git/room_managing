@@ -7,16 +7,9 @@
     	<link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}" />   
     	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
         <script src="{{url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
-        <script type="text/javascript" src="">
-    window.alert = function() {};
-
-// or simply
-alert = function() {};
-window.prompt = alert;
-prompt = alert;
-</script>
+         <script src="{{url('event/js/alert.js')}}" type="text/javascript"></script>
     </head>
-    <body>
+    <body >
         <form id="f" action="{{url('api/v1/reservations_new')}}" style="padding:20px;">
             <h1>New Reservation</h1>
             <div>ملاحظات: </div>
@@ -51,7 +44,7 @@ prompt = alert;
                 </select>
                 
             </div>
-            <div class="space"><input type="submit" value="Save" /> <a href="javascript:close();">Cancel</a></div>
+            <div class="space"><input type="submit" id='submit' value="Save" /> <a href="javascript:close();">Cancel</a></div>
         </form>
          @include('partials.javascripts')
         <script type="text/javascript">
@@ -60,18 +53,26 @@ prompt = alert;
                 parent.DayPilot.ModalStatic.close(result);
             }
         }
+        var condition = true;
 
         $("#f").submit(function () {
             var f = $("#f");
-            console.log()
+          
             if(document.getElementById('name').value == ''){
                 document.getElementById('name').value = 'No Customer Name'
             }
-            console.log(f.serialize());
-            $.post(f.attr("action"), f.serialize(), function (result) {
+             
+            if(condition ){
+                 var condition = false;
+                $.post(f.attr("action"), f.serialize(), function (result) {
+                      var condition = true;
                 close(eval(result));
             });
             return false;
+            }else {
+                 window._backUpalert('please wait');
+            }
+            
         });
 
         $(document).ready(function () {
@@ -93,12 +94,6 @@ prompt = alert;
             dateFormat: "{{ config('app.date_format_js') }}",
             timeFormat: "HH:mm:ss"
         });
-    </script>
-         <script type="text/javascript" src="">
-    
-        window.frames[0].alert =  window.frames[0].prompt =  window.frames[0].confirm = window.alert =window.confirm = window.prompt =alert =prompt = confirm =  function () {
-        debugger;
-        };
     </script>
 
     </body>

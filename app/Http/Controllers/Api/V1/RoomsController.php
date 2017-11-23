@@ -82,9 +82,9 @@ class RoomsController extends Controller
     public function getRooms(Request $request)
     {
 
-        $capacity = $request->get('capacity');
-        if($capacity > 0){
-            $rooms = Room::where('capacity', '=', $request->get('capacity'))->orderBy('name')->get()->all();;
+        $room_number = $request->get('room_number');
+       
+            $rooms = Room::where('name', 'like','%'.$room_number . '%' )->orderBy('id')->get()->all();;
             $results = [];
             foreach ($rooms as $room) {
 
@@ -97,21 +97,7 @@ class RoomsController extends Controller
                 $results[] = $r;
             }
             return response()->json($results);
-        }else {
-            $rooms = Room::orderBy('name')->get()->all();
-            $results = [];
-            foreach ($rooms as $room) {
-
-                $r = new Room_Result();
-                $r->id = $room['id'];
-                $r->name = $room['name'];
-                $r->capacity = $room['capacity'];
-                $r->status = $room['status'];
-                $r->size = $room['size'];
-                $results[] = $r;
-            }
-            return response()->json($results);
-        }
+     
 
 
     }
