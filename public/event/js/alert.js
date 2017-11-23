@@ -2,7 +2,8 @@ window._backUpalert = alert;
   var removerAlert = function (){
       
       window.alert =alert =  function () {
-      debugger;
+      // debugger;
+      console.log('alert ....');
         };
     }
     removerAlert();

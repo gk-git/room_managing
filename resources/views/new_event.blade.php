@@ -4,13 +4,13 @@
         <meta charset="UTF-8">
         <title>New Reservation</title>
           @include('partials.head')
-    	<link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}" />   
+    	<link type="text/css" rel="stylesheet" href="{{ secure_url('event/media/layout.css')}}" />   
     	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-        <script src="{{url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
-         <script src="{{url('event/js/alert.js')}}" type="text/javascript"></script>
+        <script src="{{ secure_url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
+         <script src="{{ secure_url('event/js/alert.js')}}" type="text/javascript"></script>
     </head>
     <body >
-        <form id="f" action="{{url('api/v1/reservations_new')}}" style="padding:20px;">
+        <form id="f" action="{{ secure_url('api/v1/reservations_new')}}" style="padding:20px;">
             <h1>New Reservation</h1>
             <div>ملاحظات: </div>
             <div><input type="text" id="name" name="name" value="" /></div>
@@ -61,15 +61,16 @@
             if(document.getElementById('name').value == ''){
                 document.getElementById('name').value = 'No Customer Name'
             }
-             
-            if(condition ){
-                 var condition = false;
+              
+            if(condition){
+            condition = false;
                 $.post(f.attr("action"), f.serialize(), function (result) {
                       var condition = true;
                 close(eval(result));
             });
             return false;
-            }else {
+            }
+            else {
                  window._backUpalert('please wait');
             }
             
@@ -86,7 +87,7 @@
     $('.js-example-basic-single').select2();
 });
         </script>
-        <script src="{{ url('quickadmin/js') }}/timepicker.js"></script>
+        <script src="{{ secure_url('quickadmin/js') }}/timepicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>    <script>
         $('.datetime').datetimepicker({

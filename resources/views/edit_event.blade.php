@@ -5,14 +5,14 @@
         <title>Edit Event</title>
         
          @include('partials.head')
-    	<link type="text/css" rel="stylesheet" href="{{url('event/media/layout.css')}}" />    
-        <script src="{{url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
-         <script src="{{url('event/js/alert.js')}}" type="text/javascript"></script>
+    	<link type="text/css" rel="stylesheet" href="{{ secure_url('event/media/layout.css')}}" />    
+        <script src="{{secure_url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
+         <script src="{{secure_url('event/js/alert.js')}}" type="text/javascript"></script>
 
     </head>
     <body>
     
-        <form id="f" action="{{url('api/v1/reservations_update')}}" style="padding:20px;">
+        <form id="f" action="{{ secure_url('api/v1/reservations_update')}}" style="padding:20px;">
             {{csrf_field()}}
             <input type="hidden" name="id" value="{{$id}}" />
             <h1>تعديل الحجز</h1>
@@ -104,7 +104,7 @@
     
         </script>
       
-        <script src="{{ url('quickadmin/js') }}/timepicker.js"></script>
+        <script src="{{ secure_url('quickadmin/js') }}/timepicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.4.5/jquery-ui-timepicker-addon.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.2.0/js/dataTables.select.min.js"></script>  
      

@@ -16,15 +16,17 @@ class CustomerCrudActionObserver
     {
         $users = User::get()->all();
         $emails = [];
-        foreach($users as $user){
-            $emails[] = $user->email;
-        }
-        $data = [
+         $data = [
             "action" => "تم الحذف",
             "crud_name" => "الزبائن"
         ];
+        foreach($users as $user){
+            $emails[] = $user->email;
+            Notification::send($user, new QA_EmailNotification($data));
+        }
+       
         $users = \App\User::where("email", $emails)->get();
-        Notification::send($users, new QA_EmailNotification($data));
+        // Notification::send($users, new QA_EmailNotification($data));
     }
 
 }
