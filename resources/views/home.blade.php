@@ -42,7 +42,9 @@
         .status_cleanup.scheduler_default_rowheadercol2 .scheduler_default_rowheader_inner {
             border-left: 5px solid #f9ba25; /* orange */
         }
-
+        .scheduler_default_event .scheduler_default_event_bar .scheduler_default_event_bar_inner{
+            width: 100% !important;
+        }
     </style>
 
 @endsection
@@ -81,8 +83,8 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('name', trans('quickadmin.customers.fields.name').'*', ['class' => 'control-label']) !!}
-                    {!! Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => 'Customer name', 'required' => '']) !!}
-                    <p class="help-block">Customer name</p>
+                    {!! Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => 'اسم الزبون', 'required' => '']) !!}
+                    <p class="help-block">اسم الزبون</p>
                     @if($errors->has('name'))
                         <p class="help-block">
                             {{ $errors->first('name') }}
@@ -93,8 +95,8 @@
             <div class="row">
                 <div class="col-xs-12 form-group">
                     {!! Form::label('phone', trans('quickadmin.customers.fields.phone').'*', ['class' => 'control-label']) !!}
-                    {!! Form::text('phone', old('phone'), ['class' => 'form-control', 'placeholder' => 'Customer Phone number', 'required' => '']) !!}
-                    <p class="help-block">Customer Phone number</p>
+                    {!! Form::text('phone', old('phone'), ['class' => 'form-control', 'placeholder' => 'رقم هاتف العميل', 'required' => '']) !!}
+                    <p class="help-block">رقم هاتف العميل</p>
                     @if($errors->has('phone'))
                         <p class="help-block">
                             {{ $errors->first('phone') }}
@@ -119,21 +121,21 @@
                         <div style="margin-left: 160px;">
 
                             <div class="space">
-                                Show rooms:
+                               عرض الخيام:
                                 <input type="text" name="rooms" id='filter' placeholder='أدخل رقم الخيمه لإجراء التصفية'/>
 
                                 <div class="space">
-                                    Time range:
+                                    النطاق الزمني:
                                     <select id="timerange">
-                                        <option value="week">Week</option>
-                                        <option value="month" selected>Month</option>
+                                        <option value="week" selected>أسبوع</option>
+                                        <option value="month" >شهر</option>
                                     </select>
-                                    <label for="autocellwidth"><input type="checkbox" id="autocellwidth">Auto Cell Width</label>
+                                    <label for="autocellwidth"><input type="checkbox" id="autocellwidth" selected>Auto table Cell width</label>
                                 </div>
                             </div>
                             <div id="dp"></div>
                             <div class="space">
-                                <a href="#" id="add-room">Add Room</a>
+                                <a href="#" id="add-room">اضافه خيمه</a>
                             </div>
 
                         </div>
@@ -210,6 +212,8 @@
             {groupBy: "Month", format: "MMMM yyyy"},
             {groupBy: "Day", format: "d"}
         ];
+         dp.heightSpec = "Max";
+  dp.height = 350;
 
         dp.eventHeight = 50;
         dp.bubble = new DayPilot.Bubble({});
@@ -336,6 +340,7 @@
         };
 
         dp.onBeforeEventRender = function (args) {
+              args.e.toolTip = '';
             var start = new DayPilot.Date(args.e.start);
             var end = new DayPilot.Date(args.e.end);
 
@@ -387,7 +392,7 @@ if(paid){
             console.log('End');
             loadResources();
                 loadEvents();
-        }, 2000 )
+        }, 5000 )
         loadResources();
         loadEvents();
 

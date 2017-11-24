@@ -83,7 +83,7 @@
 
         $("#f").submit(function () {
             var f = $("#f");
-             
+             $('')
             if(condition ){
                condition = false;
                  $.post(f.attr("action"), f.serialize(), function (result) {
@@ -94,6 +94,7 @@
             }
             else {
                 window._backUpalert('please wait');
+                return false;
             }
            
         });

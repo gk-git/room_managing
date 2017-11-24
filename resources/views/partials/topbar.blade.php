@@ -49,7 +49,7 @@
                                         @endforeach
                                     @else
                                         <li class="notification-link" style="text-align:center;">
-                                            No notifications
+                                           لا إشعارات
                                         </li>
                                     @endif
                                 </ul>

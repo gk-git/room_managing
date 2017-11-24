@@ -59,7 +59,7 @@
             var f = $("#f");
           
             if(document.getElementById('name').value == ''){
-                document.getElementById('name').value = 'No Customer Name'
+                document.getElementById('name').value = 'لا يوجد ملاحظات'
             }
               
             if(condition){
@@ -72,6 +72,7 @@
             }
             else {
                  window._backUpalert('please wait');
+                  return false;
             }
             
         });

@@ -52,6 +52,7 @@
                 return false;
         }else {
             window._backUpalert('please wait');
+             return false;
         }
     });
 
