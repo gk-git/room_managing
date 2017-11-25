@@ -4,9 +4,9 @@
 @endsection
 @section('head')
 
-    <link type="text/css" rel="stylesheet" href="{{ secure_url('event/media/layout.css')}}"/>
-    <script src="{{secure_url('event/js/daypilot/daypilot-all.min.js')}}" type="text/javascript"></script>
-    <script src="{{secure_url('event/js/alert.js')}}" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="{{  url('event/media/layout.css')}}"/>
+    <script src="{{ url('event/js/daypilot/daypilot-all.min.js')}}" type="text/javascript"></script>
+    <script src="{{ url('event/js/alert.js')}}" type="text/javascript"></script>
 
     <style type="text/css">
         .icon {
@@ -192,7 +192,7 @@
             modal.onClosed = function (args) {
                 loadResources();
             };
-            modal.showUrl("{{ secure_url('admin/room_add')}}");
+            modal.showUrl("{{  url('admin/room_add')}}");
         });
     </script>
 
@@ -267,7 +267,7 @@
                     newResource: args.newResource
                 };
               
-            $.post("{{ secure_url('api/v1/reservations_move')}}",
+            $.post("{{  url('api/v1/reservations_move')}}",
                data,
                 function (data) {
                     dp.message(data.message);
@@ -282,7 +282,7 @@
                     newEnd: args.newEnd.toString('yyyy-MM-dd HH:mm:ss')
                 };
             
-            $.post("{{ secure_url('api/v1/reservations_resize')}}",
+            $.post("{{  url('api/v1/reservations_resize')}}",
                 data,
                 function () {
                     dp.message("Resized.");
@@ -290,7 +290,7 @@
         };
 
         dp.onEventDeleted = function (args) {
-            $.post("{{ secure_url('api/v1/reservations_delete')}}",
+            $.post("{{  url('api/v1/reservations_delete')}}",
                 {
                     id: args.e.id()
                 },
@@ -420,7 +420,7 @@ if(paid){
                 end: end.toString('yyyy-MM-dd HH:mm:ss')
             }
            
-            $.post("{{ secure_url('api/v1/reservations_get')}}",
+            $.post("{{  url('api/v1/reservations_get')}}",
                 data,
                 function (data) {
                     dp.events.list = data;
@@ -430,7 +430,7 @@ if(paid){
         }
 
         function loadResources() {
-            $.post("{{ secure_url('api/v1/rooms_get')}}",
+            $.post("{{  url('api/v1/rooms_get')}}",
                 {room_number: $("#filter").val()},
                 function (data) {
                     dp.resources = data;

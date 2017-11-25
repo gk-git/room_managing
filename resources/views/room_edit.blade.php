@@ -9,9 +9,9 @@
 <link rel="manifest" href="/manifest.json">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 <meta name="theme-color" content="#523c35">
-    <link type="text/css" rel="stylesheet" href="{{ secure_url('event/media/layout.css')}}"/>
-    <script src="{{ secure_url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
-    <script src="{{ secure_url('event/js/alert.js')}}" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="{{  url('event/media/layout.css')}}"/>
+    <script src="{{  url('event/js/jquery/jquery-1.9.1.min.js')}}" type="text/javascript"></script>
+    <script src="{{  url('event/js/alert.js')}}" type="text/javascript"></script>
 
 </head>
 <body>
@@ -71,7 +71,7 @@ var condition = true;
         var f = $("#f");
      if(condition){
           condition = false;
-          $.post("{{ secure_url('api/v1/room_update')}}", f.serialize(), function (result) {
+          $.post("{{  url('api/v1/room_update')}}", f.serialize(), function (result) {
             condition = true;
             close(eval(result));
         });
