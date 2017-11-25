@@ -213,7 +213,7 @@
             {groupBy: "Day", format: "d"}
         ];
          dp.heightSpec = "Max";
-  dp.height = 350;
+  dp.height = 3/home/kashtacamp50;
 
         dp.eventHeight = 50;
         dp.bubble = new DayPilot.Bubble({});
