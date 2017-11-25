@@ -9,13 +9,13 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/manifest.json">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
- <script src="{{ secure_url('event/js/alert.js')}}" type="text/javascript"></script>
+ <script src="{{  url('event/js/alert.js')}}" type="text/javascript"></script>
 
 <meta name="theme-color" content="#523c35">
     <title>Kashta Camp</title>
 </head>
 <body>
-    <img src="{{secure_url('event/background.jpg')}}" style="width: 100%; "></img>
+    <img src="{{ url('event/background.jpg')}}" style="width: 100%; "></img>
     
 
 </body>

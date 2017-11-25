@@ -22,7 +22,7 @@
                       role="form"
                       method="POST"
                       action="{{ url('login') }}">
-                    {{secure_url('/')}}
+                    {{ url('/')}}
                     <input type="hidden"
                            name="_token"
                            value="{{ csrf_token() }}">
